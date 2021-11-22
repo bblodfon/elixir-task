@@ -58,7 +58,7 @@ A SEGMENT file, on the other hand, may have varying number of lines.
 The program should take two input files.
 Based on the types of file (SEGMENT or FUNCTION), the program should calculate a value as follows:
 
-- 2 SEGMENT files: calculate the overlap (in number of positions) of the regions from file X.s with regions from file Y.s.
+- **2 SEGMENT files**: calculate the overlap (in number of positions) of the regions from file X.s with regions from file Y.s.
 
 Example:
 
@@ -78,7 +78,7 @@ has an overlap of 3 (i.e. for positions 1, 3 and 4).
 
 Note that the example files shown here have a "genome" of length 7
 
-- 2 FUNCTION files: calculate the sample *Pearson correlation coefficient* of the two number lists ([see here](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#For_a_sample) for the formula)
+- **2 FUNCTION files**: calculate the sample *Pearson correlation coefficient* of the two number lists ([see here](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#For_a_sample) for the formula)
 
 Example: the two files
 
@@ -106,13 +106,13 @@ Y.f
 
 Have a Pearson correlation of 0.9452853.
 
-- 1 SEGMENT and one FUNCTION file: The mean of the numbers in the FUNCTION file whose positions are covered by the regions in the SEGMENT file.
+- **1 SEGMENT and 1 FUNCTION file**: The mean of the numbers in the FUNCTION file whose positions are covered by the regions in the SEGMENT file.
 That is, the regions in the SEGMENT file refer to positions on the genome and hence to the index of the lines in the FUNCTION file.
 
 Example: for files X.s and Y.f, the covered numbers are (11.5, 13.0, 13.5, 15.0), which are on lines with index 1,3,4 and 5, the ones covered by the SEGMENT regions.
 These numbers have a mean of 13.25.
 
-# Implementation
+# Notes on Implementation
 
 The program should be written in Python, with limited use of external libraries.
 The goal is to write quick code that still tries to follow good programming practices as regards object-oriented programming, system architecture, unit testing, and such.
