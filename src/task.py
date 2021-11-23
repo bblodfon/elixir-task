@@ -7,7 +7,7 @@ class ElixirTask:
         self.segment_file = []
         self.function_files = []
 
-    def calculate_overlap(self, list1, list2):
+    def get_overlap(self, list1, list2):
         """
         Calculate overlap between two lists with regions
 
@@ -27,7 +27,7 @@ class ElixirTask:
 
             region1 = list1[i]
             region2 = list2[j]
-            if self.intervals_overlap(region1, region2):
+            if self.overlapping_regions(region1, region2):
                 max_start = max(region1[0], region2[0])
                 min_end   = min(region1[1], region2[1])
 
@@ -50,7 +50,8 @@ class ElixirTask:
 
         return overlap
 
-    def intervals_overlap(self, region1, region2):
+    @staticmethod
+    def overlapping_regions(region1, region2):
         start1, end1 = region1
         start2, end2 = region2
         if (start2 <= start1 < end2) or (start1 <= start2 < end1):
@@ -58,7 +59,8 @@ class ElixirTask:
         else:
             return False
 
-    def calculate_pearson(self, x, y):
+    @staticmethod
+    def pearson_cor(x, y):
         """
         Calculate Pearson Correlation coefficient between
         two lists of numeric values
@@ -113,13 +115,13 @@ if __name__ == '__main__':
     values2 = fun_file_loader2.read_file()
     print(values2)
 
-    print(task.calculate_pearson(values1, values2))
+    print(task.pearson_cor(values1, values2))
 
     values1 = list(range(0, 10))
     values2 = 10 * [1]
 
     print(values1, values2)
 
-    print(task.calculate_pearson(values1, values2))
+    print(task.pearson_cor(values1, values2))
 
 
