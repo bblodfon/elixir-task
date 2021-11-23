@@ -1,5 +1,7 @@
 # elixir-task
 
+![](https://github.com/bblodfon/elixir-task/actions/workflows/pytest-ci.yml/badge.svg)
+
 Development task for Elixir.no position candidates.
 
 ## Inputs
