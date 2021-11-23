@@ -1,1 +1,4 @@
 .idea/
+/testfile*
+*/__pycache__/*
+
