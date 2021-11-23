@@ -1,5 +1,8 @@
-from src.file_loader import SegmentFileLoader, FunctionFileLoader
 import math
+import warnings
+
+from src.file_loader import SegmentFileLoader, FunctionFileLoader
+
 
 class ElixirTask:
 
@@ -68,16 +71,21 @@ class ElixirTask:
         x_mean = sum(x)/len(x)
         y_mean = sum(y)/len(y)
         x_diff_mean = [el - x_mean for el in x]
+        if all(el == 0 for el in x_diff_mean):
+            warnings.warn('Constant input list x')
+            return math.nan
+
         y_diff_mean = [el - y_mean for el in y]
+        if all(el == 0 for el in y_diff_mean):
+            warnings.warn('Constant input list y')
+            return math.nan
+
         x_diff_mean_squared = [el ** 2 for el in x_diff_mean]
         y_diff_mean_squared = [el ** 2 for el in y_diff_mean]
 
         numerator   = sum([i*j for (i,j) in zip(x_diff_mean, y_diff_mean)])
         denominator = math.sqrt(sum(x_diff_mean_squared)) * \
                       math.sqrt(sum(y_diff_mean_squared))
-
-        # TODO: std ved of vector x or y might be zero
-        # all(x_diff_mean_squared == 0) then return None?
 
         return numerator/denominator
 
@@ -117,11 +125,11 @@ if __name__ == '__main__':
 
     print(task.pearson_cor(values1, values2))
 
-    values1 = list(range(0, 10))
-    values2 = 10 * [1]
+    #values1 = list(range(0, 10))
+    #values2 = 10 * [1]
 
-    print(values1, values2)
+    #print(values1, values2)
 
-    print(task.pearson_cor(values1, values2))
+    #print(task.pearson_cor(values1, values2))
 
 
