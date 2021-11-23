@@ -31,7 +31,7 @@ class SegmentFileLoader(FileLoader):
 
         with open(self.file_path, 'r') as data:
             start = []
-            end = []
+            end   = []
             for line in data:
                 p = line.split(sep='\t')
                 if len(p) != 2:
