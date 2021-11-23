@@ -1,4 +1,5 @@
 from src.file_loader import SegmentFileLoader, FunctionFileLoader
+import math
 
 class ElixirTask:
 
@@ -16,11 +17,13 @@ class ElixirTask:
 
     def calculate_overlap(self, list1, list2):
         """
-        Calculate overlap (number of positions) between two lists with regions
+        Calculate overlap between two lists with regions
 
         :param list1: A list with elements in the form [start, end],
             corresponding to the regions
         :param list2: same as list1
+        :return an integer value equal to the number of positions in which
+        the given two lists overlap
         """
 
         i = 0
@@ -55,6 +58,26 @@ class ElixirTask:
 
         return overlap
 
+    def calculate_pearson(self, x, y):
+        """
+        Calculate Pearson Correlation coefficient between
+        two lists of numeric values
+        """
+        x_mean = sum(x)/len(x)
+        y_mean = sum(y)/len(y)
+        x_diff_mean = [el - x_mean for el in x]
+        y_diff_mean = [el - y_mean for el in y]
+        x_diff_mean_squared = [el ** 2 for el in x_diff_mean]
+        y_diff_mean_squared = [el ** 2 for el in y_diff_mean]
+
+        numerator   = sum([i*j for (i,j) in zip(x_diff_mean, y_diff_mean)])
+        denominator = math.sqrt(sum(x_diff_mean_squared)) * \
+                      math.sqrt(sum(y_diff_mean_squared))
+
+        # TODO: std ved of vector x or y might be zero
+        # all(x_diff_mean_squared == 0) then return None?
+
+        return numerator/denominator
 
 if __name__ == '__main__':
 
@@ -77,11 +100,26 @@ if __name__ == '__main__':
     print(regions2)
     print(start_coord_2, end_coord_2)
 
+    fun_test_file1 = '/home/john/repos/py-code/elixir-task/test/X.f'
+    fun_file_loader1 = FunctionFileLoader(fun_test_file1)
+    fun_file_loader1.max_values_num = 7
+    values1 = fun_file_loader1.read_file()
+    print(values1)
 
-    """
-    test_file2 = '../testfile_a.f'
-        function_file_loader = FunctionFileLoader(test_file2)
-        values = function_file_loader.read_file()
-        print(values[0], len(values))
-    """
+    fun_test_file2 = '/home/john/repos/py-code/elixir-task/test/Y.f'
+    fun_file_loader2 = FunctionFileLoader(fun_test_file2)
+    fun_file_loader2.max_values_num = 7
+
+    values2 = fun_file_loader2.read_file()
+    print(values2)
+
+    print(task.calculate_pearson(values1, values2))
+
+    values1 = list(range(0, 10))
+    values2 = 10 * [1]
+
+    print(values1, values2)
+
+    print(task.calculate_pearson(values1, values2))
+
 
