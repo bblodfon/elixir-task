@@ -72,12 +72,12 @@ class ElixirTask:
         y_mean = sum(y)/len(y)
         x_diff_mean = [el - x_mean for el in x]
         if all(el == 0 for el in x_diff_mean):
-            warnings.warn('Constant input list x')
+            warnings.warn('Constant first input list x')
             return math.nan
 
         y_diff_mean = [el - y_mean for el in y]
         if all(el == 0 for el in y_diff_mean):
-            warnings.warn('Constant input list y')
+            warnings.warn('Constant second input list y')
             return math.nan
 
         x_diff_mean_squared = [el ** 2 for el in x_diff_mean]
