@@ -53,7 +53,7 @@ All FUNCTION files must be fully defined, with one value per position.
 A FUNCTION file thus always has 10 million lines.
 A SEGMENT file, on the other hand, may have varying number of lines.
 
-# Task overview
+## Task overview
 
 The program should take two input files.
 Based on the types of file (SEGMENT or FUNCTION), the program should calculate a value as follows:
@@ -112,7 +112,7 @@ That is, the regions in the SEGMENT file refer to positions on the genome and he
 Example: for files X.s and Y.f, the covered numbers are (11.5, 13.0, 13.5, 15.0), which are on lines with index 1,3,4 and 5, the ones covered by the SEGMENT regions.
 These numbers have a mean of 13.25.
 
-# Notes on Implementation
+## Notes on Implementation
 
 The program should be written in Python, with limited use of external libraries.
 The goal is to write quick code that still tries to follow good programming practices as regards object-oriented programming, system architecture, unit testing, and such.
