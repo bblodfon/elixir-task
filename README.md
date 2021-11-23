@@ -1,6 +1,6 @@
 # elixir-task
 
-![](https://github.com/bblodfon/elixir-task/actions/workflows/pytest-ci.yml/badge.svg)
+[![](https://github.com/bblodfon/elixir-task/actions/workflows/pytest-ci.yml/badge.svg)](https://github.com/bblodfon/elixir-task/actions)
 
 Development task for Elixir.no position candidates.
 
