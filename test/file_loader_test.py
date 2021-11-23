@@ -44,7 +44,8 @@ class SegmentFileLoaderTest(unittest.TestCase):
         # file is empty
         seg_file_loader_empty = SegmentFileLoader('empty.s')
         start, end = seg_file_loader_empty.read_file()
-        print(start, end)
+        self.assertEqual(start, [])
+        self.assertEqual(end, [])
 
         # file exists and is properly formatted
         seg_file_loader = SegmentFileLoader('testfile.s')
