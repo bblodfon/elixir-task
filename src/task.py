@@ -7,14 +7,6 @@ class ElixirTask:
         self.segment_file = []
         self.function_files = []
 
-    def intervals_overlap(self, region1, region2):
-        start1, end1 = region1
-        start2, end2 = region2
-        if (start2 <= start1 < end2) or (start1 <= start2 < end1):
-            return True
-        else:
-            return False
-
     def calculate_overlap(self, list1, list2):
         """
         Calculate overlap between two lists with regions
@@ -57,6 +49,14 @@ class ElixirTask:
                     break
 
         return overlap
+
+    def intervals_overlap(self, region1, region2):
+        start1, end1 = region1
+        start2, end2 = region2
+        if (start2 <= start1 < end2) or (start1 <= start2 < end1):
+            return True
+        else:
+            return False
 
     def calculate_pearson(self, x, y):
         """
