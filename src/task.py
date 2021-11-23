@@ -42,13 +42,13 @@ class ElixirTask:
             # index which we need to increase in the next iteration
             if region1[1] <= region2[1]:
                 if i < len(list1) - 1:
-                    print('Increase i')
+                    # print('Increase i')
                     i = i + 1
                 else: # no more regions to check from first list
                     break
             elif region1[1] > region2[1]:
                 if j < len(list2) - 1:
-                    print('Increase j')
+                    # print('Increase j')
                     j = j + 1
                 else: # no more regions to check from second list
                     break
