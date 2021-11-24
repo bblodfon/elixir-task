@@ -1,24 +1,19 @@
-import os
 import unittest
 
 from src.file_loader import SegmentFileLoader, FunctionFileLoader
 
-parent_dir = os.path.dirname(os.path.abspath(__file__))
-
-def asbolute_path(str):
-    return parent_dir + '/' + str
 
 class SegmentFileLoaderTest(unittest.TestCase):
     def test_check_suffix(self):
-        seg_file_loader = SegmentFileLoader(asbolute_path('testfile_1.s'))
+        seg_file_loader = SegmentFileLoader('test/testfile_1.s')
         seg_file_loader.check_suffix()
 
-        seg_file_loader2 = SegmentFileLoader(asbolute_path('testfile_1.sas'))
+        seg_file_loader2 = SegmentFileLoader('test/testfile_1.sas')
         with self.assertRaises(Exception):
             seg_file_loader2.check_suffix()
 
     def test_check_data(self):
-        seg_file_loader = SegmentFileLoader(asbolute_path('testfile_1.s'))
+        seg_file_loader = SegmentFileLoader('test/testfile_1.s')
         seg_file_loader.check_data(start=[0, 3, 5], end=[1, 4, 7])
 
         seg_file_loader.check_data(start=[0, 1, 2], end=[1, 2, 3])
@@ -33,28 +28,28 @@ class SegmentFileLoaderTest(unittest.TestCase):
 
     def test_read_file(self):
         # file doesn't exist
-        seg_file_loader0 = SegmentFileLoader(asbolute_path('testfile_0.s'))
+        seg_file_loader0 = SegmentFileLoader('test/testfile_0.s')
         with self.assertRaises(FileNotFoundError):
             seg_file_loader0.read_file()
 
         # file exists and is not properly formatted
-        seg_file_loader1 = SegmentFileLoader(asbolute_path('testfile_1.s'))
+        seg_file_loader1 = SegmentFileLoader('test/testfile_1.s')
         with self.assertRaises(Exception):
             seg_file_loader1.read_file()
 
         # file exists and is not properly formatted
-        seg_file_loader2 = SegmentFileLoader(asbolute_path('testfile_2.s'))
+        seg_file_loader2 = SegmentFileLoader('test/testfile_2.s')
         with self.assertRaises(Exception):
             seg_file_loader2.read_file()
 
         # file is empty
-        seg_file_loader_empty = SegmentFileLoader(asbolute_path('empty.s'))
+        seg_file_loader_empty = SegmentFileLoader('test/empty.s')
         start, end = seg_file_loader_empty.read_file()
         self.assertEqual(start, [])
         self.assertEqual(end, [])
 
         # file exists and is properly formatted
-        seg_file_loader = SegmentFileLoader(asbolute_path('testfile.s'))
+        seg_file_loader = SegmentFileLoader('test/testfile.s')
         start, end = seg_file_loader.read_file()
 
         self.assertEqual(start, [0, 5, 15, 17, 99])
@@ -62,15 +57,15 @@ class SegmentFileLoaderTest(unittest.TestCase):
 
 class FunctionFileLoaderTest(unittest.TestCase):
     def test_check_suffix(self):
-        fun_file_loader = FunctionFileLoader(asbolute_path('testfile_1.f'))
+        fun_file_loader = FunctionFileLoader('test/testfile_1.f')
         fun_file_loader.check_suffix()
 
-        fun_file_loader2 = FunctionFileLoader(asbolute_path('testfile_1.fas'))
+        fun_file_loader2 = FunctionFileLoader('test/testfile_1.fas')
         with self.assertRaises(Exception):
             fun_file_loader2.check_suffix()
 
     def test_check_data(self):
-        fun_file_loader = FunctionFileLoader(asbolute_path('testfile_1.f'))
+        fun_file_loader = FunctionFileLoader('test/testfile_1.f')
 
         values = [0.0, 0.1, 0.3]
         # change max value for the test
@@ -87,12 +82,12 @@ class FunctionFileLoaderTest(unittest.TestCase):
 
     def test_read_file(self):
         # file doesn't exist
-        fun_file_loader0 = FunctionFileLoader(asbolute_path('testfile_0.f'))
+        fun_file_loader0 = FunctionFileLoader('test/testfile_0.f')
         with self.assertRaises(FileNotFoundError):
             fun_file_loader0.read_file()
 
         # file exists and is not properly formatted (has a string)
-        fun_file_loader1 = FunctionFileLoader(asbolute_path('testfile_1.f'))
+        fun_file_loader1 = FunctionFileLoader('test/testfile_1.f')
         with self.assertRaises(Exception):
             fun_file_loader1.read_file()
 
