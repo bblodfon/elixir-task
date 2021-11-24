@@ -4,6 +4,28 @@
 
 Development task for Elixir.no position candidates.
 
+## Run
+
+From the root of this repo, run the simple test examples as follows:
+```
+python src/task.py test/X.s test/Y.s
+python src/task.py test/X.f test/Y.f
+python src/task.py test/X.f test/Y.s
+python src/task.py test/X.s test/Y.f
+```
+
+For the larger test files given in the task (not available in this repo due to their large size), you can run for example:
+```
+python src/task.py testfile_a.s testfile_b.f
+```
+
+## Things to consider
+
+- Make separate child classes of a main (maybe abstract?) `ElixirTask`, each one implementing a subsequent task/method? (be able to expand to more tasks as separate classes vs now that's more like adding new methods to the same class)
+- Optimize calculation of Pearson's correlation coefficient?
+- Faster reading of FUNCTION files?
+- Best alternative to `warnings.warn()` used?
+
 ## Inputs
 
 Given two types of text files of genomic information, using the **SEGMENT** format and the **FUNCTION** format, as defined below:
