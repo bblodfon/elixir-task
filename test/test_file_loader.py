@@ -44,16 +44,14 @@ class SegmentFileLoaderTest(unittest.TestCase):
 
         # file is empty
         seg_file_loader_empty = SegmentFileLoader('test/empty.s')
-        start, end = seg_file_loader_empty.read_file()
-        self.assertEqual(start, [])
-        self.assertEqual(end, [])
+        regions = seg_file_loader_empty.read_file()
+        self.assertEqual(regions, [])
 
         # file exists and is properly formatted
         seg_file_loader = SegmentFileLoader('test/testfile.s')
-        start, end = seg_file_loader.read_file()
+        regions2 = seg_file_loader.read_file()
 
-        self.assertEqual(start, [0, 5, 15, 17, 99])
-        self.assertEqual(end, [5, 10, 16, 99, 101])
+        self.assertEqual(regions2, [[0, 5], [5, 10], [15, 16], [17, 99], [99, 101]])
 
 class FunctionFileLoaderTest(unittest.TestCase):
     def test_check_suffix(self):

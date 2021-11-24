@@ -133,12 +133,10 @@ if __name__ == '__main__':
         print('2 SEGMENT files')
 
         seg_file_loader_1 = SegmentFileLoader(file1)
-        start1, end1 = seg_file_loader_1.read_file()
-        regions1 = [[start, end] for (start, end) in zip(start1, end1)]
+        regions1 = seg_file_loader_1.read_file()
 
         seg_file_loader_2 = SegmentFileLoader(file2)
-        start2, end2 = seg_file_loader_2.read_file()
-        regions2 = [[start, end] for (start, end) in zip(start2, end2)]
+        regions2 = seg_file_loader_2.read_file()
 
         overlap = task.get_overlap(regions1, regions2)
         print('Overlap:', overlap)
@@ -164,8 +162,7 @@ if __name__ == '__main__':
             seg_file_loader = SegmentFileLoader(file2)
             fun_file_loader = FunctionFileLoader(file1)
 
-        reg_start, reg_end = seg_file_loader.read_file()
-        regions = [[start, end] for (start, end) in zip(reg_start, reg_end)]
+        regions = seg_file_loader.read_file()
         fun_values = fun_file_loader.read_file()
 
         regions_mean = task.get_mean(regions, fun_values)

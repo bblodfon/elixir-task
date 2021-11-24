@@ -44,7 +44,9 @@ class SegmentFileLoader(FileLoader):
 
         self.check_data(start, end)
 
-        return start, end
+        regions = [[s, e] for (s, e) in zip(start, end)]
+
+        return regions
 
     def check_suffix(self):
         _, ext = os.path.splitext(self.file_path)
