@@ -6,6 +6,12 @@ import warnings
 from src.file_loader import SegmentFileLoader, FunctionFileLoader
 
 
+def warning_on_one_line(message, category, filename, lineno, line=None):
+    return '%s:%s: %s: %s\n' % (
+        filename, lineno, category.__name__, message)
+
+warnings.formatwarning = warning_on_one_line
+
 class ElixirTask:
 
     def get_overlap(self, list1, list2):
@@ -140,11 +146,9 @@ if __name__ == '__main__':
         print('2 FUNCTION files')
 
         fun_file_loader1 = FunctionFileLoader(file1)
-        #fun_file_loader1.max_values_num = 7
         fun_values1 = fun_file_loader1.read_file()
 
         fun_file_loader2 = FunctionFileLoader(file2)
-        #fun_file_loader2.max_values_num = 7
         fun_values2 = fun_file_loader2.read_file()
 
         cor = task.pearson_cor(fun_values1, fun_values2)
@@ -162,8 +166,6 @@ if __name__ == '__main__':
 
         reg_start, reg_end = seg_file_loader.read_file()
         regions = [[start, end] for (start, end) in zip(reg_start, reg_end)]
-
-        fun_file_loader.max_values_num = 7
         fun_values = fun_file_loader.read_file()
 
         regions_mean = task.get_mean(regions, fun_values)
