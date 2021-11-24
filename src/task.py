@@ -7,8 +7,7 @@ from src.file_loader import SegmentFileLoader, FunctionFileLoader
 
 
 def warning_on_one_line(message, category, filename, lineno, line=None):
-    return '%s:%s: %s: %s\n' % (
-        filename, lineno, category.__name__, message)
+    return '%s: %s\n' % (category.__name__, message)
 
 warnings.formatwarning = warning_on_one_line
 
