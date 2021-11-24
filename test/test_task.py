@@ -73,8 +73,5 @@ class TaskTest(unittest.TestCase):
         with self.assertWarns(Warning):
             self.assertTrue(math.isnan(task.pearson_cor(w, z)))
 
-
 if __name__ == '__main__':
-    with warnings.catch_warnings():
-        warnings.simplefilter('ignore', category=Warning)
     unittest.main()
