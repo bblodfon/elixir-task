@@ -12,7 +12,7 @@ class ElixirTask:
 
     def get_overlap(self, list1, list2):
         """
-        Calculate overlap between two lists with regions
+        Calculate overlap between two lists of regions
 
         :param list1: A list with elements in the form [start, end],
             corresponding to the regions
@@ -89,6 +89,25 @@ class ElixirTask:
 
         return numerator/denominator
 
+    def get_mean(self, region_list, fun_values):
+        """
+        Given the coordinates of a set of regions and the function values along
+        all genome positions, calculate the mean function value of the positions
+        that are covered by the given set of regions.
+
+        :param region_list: a list with elements in the form [start, end], corresponding to the coordinates of the regions
+        :param fun_values: list of float function values
+        """
+
+        indexes = self.flatten([list(range(start, end)) for [start, end] in region_list])
+        fun_sum = sum([fun_values[i] for i in indexes])
+        return fun_sum/len(indexes)
+
+    @staticmethod
+    def flatten(num_list):
+        """Flatten a given list of lists"""
+        return [item for sublist in num_list for item in sublist]
+
 if __name__ == '__main__':
 
     task = ElixirTask()
@@ -132,4 +151,5 @@ if __name__ == '__main__':
 
     #print(task.pearson_cor(values1, values2))
 
+    print(task.get_mean(regions1, values2))
 

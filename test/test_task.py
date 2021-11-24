@@ -1,6 +1,5 @@
 import math
 import unittest
-import warnings
 
 from src.task import ElixirTask
 
@@ -35,6 +34,7 @@ class TaskTest(unittest.TestCase):
         list2 = [[1, 4]]
         self.assertEqual(task.get_overlap(list1, list2), 1)
 
+        # the example in the task description
         list1 = [[1, 2], [3, 6]]
         list2 = [[0, 1], [1, 5]]
         self.assertEqual(task.get_overlap(list1, list2), 3)
@@ -72,6 +72,25 @@ class TaskTest(unittest.TestCase):
         w = 10 * [1]
         with self.assertWarns(Warning):
             self.assertTrue(math.isnan(task.pearson_cor(w, z)))
+
+    def test_get_mean(self):
+        task = ElixirTask()
+
+        # the example in the task description
+        regions = [[1, 2], [3, 6]]
+        values  = [10.5, 11.5, 12.0, 13.0, 13.5, 15.0, 14.0]
+        self.assertEqual(task.get_mean(regions, values), 13.25)
+
+        regions2 = [[0, 1], [3, 5], [5, 7]]
+        values2  = list(range(1, 10))
+        self.assertEqual(task.get_mean(regions2, values2), 4.6)
+
+    def test_flatten(self):
+        task = ElixirTask()
+
+        self.assertEqual(task.flatten([[], [], []]), [])
+        self.assertEqual(task.flatten([[], [1], [2]]), [1,2])
+        self.assertEqual(task.flatten([[3, 1], [1], [2, 10, 3]]), [3, 1, 1, 2, 10, 3])
 
 if __name__ == '__main__':
     unittest.main()
