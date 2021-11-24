@@ -65,19 +65,14 @@ class FunctionFileLoaderTest(unittest.TestCase):
             fun_file_loader2.check_suffix()
 
     def test_check_data(self):
-        fun_file_loader = FunctionFileLoader('test/testfile_1.f')
+        fun_file_loader = FunctionFileLoader('test/testfile.f')
 
         values = [0.0, 0.1, 0.3]
-        # change max value for the test
-        fun_file_loader.max_values_num = 3
-        fun_file_loader.check_data(values)
-
-        fun_file_loader.max_values_num = 4
-        with self.assertRaises(AssertionError):
+        with self.assertWarns(Warning):
             fun_file_loader.check_data(values)
 
-        values.append(0.6)
-        # now it works
+        values = range(0,10000000)
+        # now it works without warning
         fun_file_loader.check_data(values)
 
     def test_read_file(self):

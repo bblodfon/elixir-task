@@ -1,5 +1,5 @@
-# abstract base class
 import os
+import warnings
 from abc import ABC, abstractmethod
 from pathlib import Path
 
@@ -91,5 +91,7 @@ class FunctionFileLoader(FileLoader):
             raise Exception('Not correct file suffix. Should be ".f"')
 
     def check_data(self, values):
-        # A FUNCTION file always has 10 million lines
-        assert len(values) == self.max_values_num
+        # we just issue a warning to be able to test smaller files
+        if len(values) != self.max_values_num:
+            msg = str(self.file_path) + " doesn't have 10 million lines"
+            warnings.warn(msg)
