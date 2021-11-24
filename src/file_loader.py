@@ -1,12 +1,14 @@
 # abstract base class
-from abc import ABC, abstractmethod
 import os
+from abc import ABC, abstractmethod
+from pathlib import Path
+
 
 class FileLoader(ABC):
     file_path: str
 
     def __init__(self, file_path):
-        self.file_path = file_path
+        self.file_path = Path(file_path).absolute()
         super().__init__()
 
     @abstractmethod
