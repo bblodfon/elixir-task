@@ -1,14 +1,12 @@
 import math
+import os
+import sys
 import warnings
 
 from src.file_loader import SegmentFileLoader, FunctionFileLoader
 
 
 class ElixirTask:
-
-    def __init__(self):
-        self.segment_file = []
-        self.function_files = []
 
     def get_overlap(self, list1, list2):
         """
@@ -110,46 +108,66 @@ class ElixirTask:
 
 if __name__ == '__main__':
 
+    # get the files from the input arguments
+    files = sys.argv[1:]
+
+    if len(files) != 2:
+        print('We need 2 input files as input!')
+        exit(1)
+
+    file1 = files[0]
+    file2 = files[1]
+
+    _, ext1 = os.path.splitext(file1)
+    _, ext2 = os.path.splitext(file2)
+
+    # decide on the task to do based on the file extensions
     task = ElixirTask()
+    if ext1 == ext2 == '.s':
+        print('2 SEGMENT files')
 
-    test_file_1 = '/home/john/repos/py-code/elixir-task/test/X.s'
-    test_file_2 = '/home/john/repos/py-code/elixir-task/test/Y.s'
+        seg_file_loader_1 = SegmentFileLoader(file1)
+        start1, end1 = seg_file_loader_1.read_file()
+        regions1 = [[start, end] for (start, end) in zip(start1, end1)]
 
-    seg_file_loader_1 = SegmentFileLoader(test_file_1)
-    start_coord_1, end_coord_1 = seg_file_loader_1.read_file()
+        seg_file_loader_2 = SegmentFileLoader(file2)
+        start2, end2 = seg_file_loader_2.read_file()
+        regions2 = [[start, end] for (start, end) in zip(start2, end2)]
 
-    seg_file_loader_2 = SegmentFileLoader(test_file_2)
-    start_coord_2, end_coord_2 = seg_file_loader_2.read_file()
+        overlap = task.get_overlap(regions1, regions2)
+        print('Overlap:', overlap)
+    elif ext1 == ext2 == '.f':
+        print('2 FUNCTION files')
 
-    regions1 = [[start,end] for (start,end) in zip(start_coord_1, end_coord_1)]
-    print(regions1)
-    print(start_coord_1, end_coord_1)
+        fun_file_loader1 = FunctionFileLoader(file1)
+        #fun_file_loader1.max_values_num = 7
+        fun_values1 = fun_file_loader1.read_file()
 
-    regions2 = [[start, end] for (start, end) in zip(start_coord_2, end_coord_2)]
-    print(regions2)
-    print(start_coord_2, end_coord_2)
+        fun_file_loader2 = FunctionFileLoader(file2)
+        #fun_file_loader2.max_values_num = 7
+        fun_values2 = fun_file_loader2.read_file()
 
-    fun_test_file1 = '/home/john/repos/py-code/elixir-task/test/X.f'
-    fun_file_loader1 = FunctionFileLoader(fun_test_file1)
-    fun_file_loader1.max_values_num = 7
-    values1 = fun_file_loader1.read_file()
-    print(values1)
+        cor = task.pearson_cor(fun_values1, fun_values2)
 
-    fun_test_file2 = '/home/john/repos/py-code/elixir-task/test/Y.f'
-    fun_file_loader2 = FunctionFileLoader(fun_test_file2)
-    fun_file_loader2.max_values_num = 7
+        print('Pearson correlation:', cor)
+    elif (ext1 == '.s' and ext2 == '.f') or (ext1 == '.f' and ext2 == '.s'):
+        print('1 SEGMENT and 1 FUNCTION file')
 
-    values2 = fun_file_loader2.read_file()
-    print(values2)
+        if ext1 == '.s':
+            seg_file_loader = SegmentFileLoader(file1)
+            fun_file_loader = FunctionFileLoader(file2)
+        else:
+            seg_file_loader = SegmentFileLoader(file2)
+            fun_file_loader = FunctionFileLoader(file1)
 
-    print(task.pearson_cor(values1, values2))
+        reg_start, reg_end = seg_file_loader.read_file()
+        regions = [[start, end] for (start, end) in zip(reg_start, reg_end)]
 
-    #values1 = list(range(0, 10))
-    #values2 = 10 * [1]
+        fun_file_loader.max_values_num = 7
+        fun_values = fun_file_loader.read_file()
 
-    #print(values1, values2)
-
-    #print(task.pearson_cor(values1, values2))
-
-    print(task.get_mean(regions1, values2))
-
+        regions_mean = task.get_mean(regions, fun_values)
+        print('Mean function value over region segments:', regions_mean)
+    else:
+        print('An input file has wrong suffix')
+        exit(1)
